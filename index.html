@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Management System</title>
+
+<style>
+:root {
+  --primary: #4f46e5;
+  --bg: #f5f7fc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: #111827;
+  color: white;
+  padding: 24px 14px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: bold;
+  padding: 8px 10px 28px;
+}
+
+.logo span { color: #a5b4fc; }
+
+.nav-btn {
+  width: 100%;
+  display: block;
+  border: 0;
+  background: transparent;
+  color: #cbd5e1;
+  padding: 13px 14px;
+  margin: 4px 0;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 26px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+h1 { font-size: 27px; margin: 0 0 7px; }
+h2 { font-size: 19px; margin: 0 0 18px; }
+.subtitle { color: var(--muted); font-size: 14px; }
+
+.profile {
+  background: white;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat, .panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 20px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-number {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 13px;
+}
+
+.stat-icon {
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.panel { margin-bottom: 22px; }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.section-head h2 { margin: 0; }
+
+button, input, select {
+  font: inherit;
+}
+
+.btn {
+  background: var(--primary);
+  color: white;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.btn:hover { opacity: .88; }
+
+.btn-secondary {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+input, select {
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  width: 100%;
+  background: white;
+  color: var(--text);
+}
+
+input:focus, select:focus {
+  outline: 2px solid #c7d2fe;
+  border-color: var(--primary);
+}
+
+.search {
+  max-width: 300px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  min-width: 540px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: #f8fafc;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+tbody tr:hover { background: #fafaff; }
+
+.badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 12px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.absent {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.field.full { grid-column: 1 / -1; }
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.empty {
+  text-align: center;
+  padding: 28px;
+  color: var(--muted);
+}
+
+.notice {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hidden { display: none !important; }
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 18px;
+  font-size: 12px;
+}
+
+@media (max-width: 1000px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .sidebar { width: 205px; }
+}
+
+@media (max-width: 650px) {
+  .layout { display: block; }
+  .sidebar { width: 100%; padding: 12px; }
+  .logo { padding: 8px 8px 14px; }
+  .nav-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+  }
+  .nav-btn {
+    width: auto;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .main { padding: 16px; }
+  .stats { gap: 10px; }
+  .stat { padding: 14px; }
+  .stat-number { font-size: 25px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  h1 { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">🎓 Edu<span>Manage</span></div>
+
+    <nav class="nav-list">
+      <button class="nav-btn active" data-page="dashboard">🏠 Dashboard</button>
+      <button class="nav-btn" data-page="students">👨‍🎓 Students</button>
+      <button class="nav-btn" data-page="teachers">👩‍🏫 Teachers</button>
+      <button class="nav-btn" data-page="attendance">📅 Attendance</button>
+      <button class="nav-btn" data-page="results">📝 Results</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="page-title">Dashboard</h1>
+        <div class="subtitle">School Management System</div>
+      </div>
+      <div class="profile">👤 School Admin</div>
+    </header>
+
+    <!-- Dashboard -->
+    <section id="page-dashboard" class="page">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-label">Total Students</div>
+          <div class="stat-number" id="total-students">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">👩‍🏫</div>
+          <div class="stat-label">Total Teachers</div>
+          <div class="stat-number" id="total-teachers">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">🏫</div>
+          <div class="stat-label">Classes</div>
+          <div class="stat-number" id="total-classes">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">📅</div>
+          <div class="stat-label">Present Today</div>
+          <div class="stat-number" id="total-present">0</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="section-head">
+          <h2>Recent Students</h2>
+          <button class="btn" data-go="students">+ Add Students</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody id="recent-students"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Welcome to EduManage!</h2>
+        <p class="notice">
+          Manage student records, teacher details, daily attendance,
+          and examination results from one dashboard.
+        </p>
+      </div>
+    </section>
+
+    <!-- Students -->
+    <section id="page-students" class="page hidden">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Student Records</h2>
+          <button class="btn" id="show-student-form">+ Add Student</button>
+        </div>
+
+        <form id="student-form" class="hidden">
+          <div class="form-grid">
+            <div class="field">
+              <label for="student-name">Full Name *</label>
+              <input id="student-name" required maxlength="100"
+                     placeholder="Enter student name">
+            </div>
+            <div class="field">
+              <label for="student-class">Class *</label>
+              <select id="student-class" required>
+                <option value="">Select class</option>
+                <option>5</option><option>6</option>
+                <option>7</option><option>8</option>
+                <option>9</option><option>10</option>
+                <option>11</option><option>12</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="student-email">Email</label>
+              <input id="student-email" type="email"
+                     placeholder="student@example.com">
+            </div>
+            <div class="field">
+              <label for="student-phone">Phone</label>
+              <input id="student-phone" type="tel"
+                     maxlength="20" placeholder="Phone number">
+            </div>
+            <div class="field full actions">
+              <button class="btn" type="submit">Save Student</button>
+              <button class="btn btn-secondary" type="button"
+                      id="cancel-student">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="section-head">
+          <h2>All Students</h2>
+          <input class="search" id="student-search"
+                 placeholder="Search students...">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Class</th>
+                <th>Email</th><th>Phone</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="student-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teachers -->
+    <section id="page-teachers" class="page hidden">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Teacher Records</h2>
+          <button class="btn" id="show-teacher-form">+ Add Teacher</button>
+        </div>
+
+        <form id="teacher-form" class="hidden">
+          <div class="form-grid">
+            <div class="field">
+              <label for="teacher-name">Full Name *</label>
+              <input id="teacher-name" required maxlength="100"
+                     placeholder="Enter teacher name">
+            </div>
+            <div class="field">
+              <label for="teacher-subject">Subject *</label>
+              <input id="teacher-subject" required maxlength="80"
+                     placeholder="e.g. Mathematics">
+            </div>
+            <div class="field">
+              <label for="teacher-email">Email</label>
+              <input id="teacher-email" type="email"
+                     placeholder="teacher@example.com">
+            </div>
+            <div class="field">
+              <label for="teacher-phone">Phone</label>
+              <input id="teacher-phone" type="tel" maxlength="20"
+                     placeholder="Phone number">
+            </div>
+            <div class="field full actions">
+              <button class="btn" type="submit">Save Teacher</button>
+              <button class="btn btn-secondary" type="button"
+                      id="cancel-teacher">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="section-head">
+          <h2>All Teachers</h2>
+          <input class="search" id="teacher-search"
+                 placeholder="Search teachers...">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Subject</th>
+                <th>Email</th><th>Phone</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attendance -->
+    <section id="page-attendance" class="page hidden">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Daily Attendance</h2>
+          <input id="attendance-date" type="date" style="max-width:200px">
+        </div>
+        <p class="notice">
+          Choose Present or Absent for each student, then save attendance.
+          Records are stored separately for each date.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Class</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-table"></tbody>
+          </table>
+        </div>
+        <div class="actions" style="margin-top:18px">
+          <button class="btn" id="save-attendance">Save Attendance</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="page-results" class="page hidden">
+      <div class="panel">
+        <h2>Add Examination Result</h2>
+        <form id="result-form">
+          <div class="form-grid">
+            <div class="field">
+              <label for="result-student">Student *</label>
+              <select id="result-student" required></select>
+            </div>
+            <div class="field">
+              <label for="result-subject">Subject *</label>
+              <input id="result-subject" required maxlength="80"
+                     placeholder="e.g. Science">
+            </div>
+            <div class="field">
+              <label for="result-exam">Examination *</label>
+              <input id="result-exam" required maxlength="80"
+                     placeholder="e.g. Unit Test 1">
+            </div>
+            <div class="field">
+              <label for="result-marks">Marks Obtained *</label>
+              <input id="result-marks" type="number" required
+                     min="0" step="any" placeholder="e.g. 85">
+            </div>
+            <div class="field">
+              <label for="result-total">Maximum Marks *</label>
+              <input id="result-total" type="number" required
+                     min="0.01" step="any" placeholder="e.g. 100">
+            </div>
+            <div class="field full">
+              <button class="btn" type="submit">Save Result</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="section-head">
+          <h2>Examination Results</h2>
+          <input id="result-search" class="search"
+                 placeholder="Search results...">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th><th>Exam</th><th>Subject</th>
+                <th>Marks</th><th>Percentage</th><th>Grade</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="result-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      EduManage School Management System | Student Project
+    </footer>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function loadData(key) {
+  try {
+    const data = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+let students = loadData("edu_students");
+let teachers = loadData("edu_teachers");
+let attendance = loadData("edu_attendance");
+let results = loadData("edu_results");
+
+function saveData() {
+  try {
+    localStorage.setItem("edu_students", JSON.stringify(students));
+    localStorage.setItem("edu_teachers", JSON.stringify(teachers));
+    localStorage.setItem("edu_attendance", JSON.stringify(attendance));
+    localStorage.setItem("edu_results", JSON.stringify(results));
+    return true;
+  } catch {
+    alert("Could not save data. Browser storage may be full or disabled.");
+    return false;
+  }
+}
+
+// Generate unique IDs without relying on array positions.
+function newId(prefix) {
+  return prefix + "-" + Date.now().toString(36) +
+    "-" + Math.random().toString(36).slice(2, 7);
+}
+
+// Safely display user-entered text in HTML.
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function emptyRow(columns, message) {
+  return `<tr><td colspan="${columns}" class="empty">${esc(message)}</td></tr>`;
+}
+
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.toggle("hidden", section.id !== "page-" + page);
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === page);
+  });
+
+  const titles = {
+    dashboard: "Dashboard",
+    students: "Students",
+    teachers: "Teachers",
+    attendance: "Attendance",
+    results: "Examination Results"
+  };
+
+  $("page-title").textContent = titles[page] || "Dashboard";
+
+  if (page === "attendance") renderAttendance();
+  if (page === "results") renderResultOptions();
+  renderDashboard();
+}
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.page));
+});
+
+document.querySelectorAll("[data-go]").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.go));
+});
+
+function renderDashboard() {
+  $("total-students").textContent = students.length;
+  $("total-teachers").textContent = teachers.length;
+  $("total-classes").textContent = new Set(
+    students.map(student => student.className)
+  ).size;
+
+  const today = new Date().toLocaleDateString("en-CA");
+  const todaysRecords = attendance.filter(item => item.date === today);
+
+  $("total-present").textContent = todaysRecords.filter(
+    item => item.status === "Present"
+  ).length;
+
+  const recent = [...students].slice(-5).reverse();
+
+  $("recent-students").innerHTML = recent.length
+    ? recent.map(student => `
+        <tr>
+          <td>${esc(student.id)}</td>
+          <td>${esc(student.name)}</td>
+          <td>${esc(student.className)}</td>
+          <td>${esc(student.email || "—")}</td>
+        </tr>
+      `).join("")
+    : emptyRow(4, "No students added yet.");
+}
+
+// STUDENTS
+
+$("show-student-form").addEventListener("click", () => {
+  $("student-form").classList.remove("hidden");
+  $("student-name").focus();
+});
+
+$("cancel-student").addEventListener("click", () => {
+  $("student-form").reset();
+  $("student-form").classList.add("hidden");
+});
+
+$("student-form").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const student = {
+    id: newId("STU"),
+    name: $("student-name").value.trim(),
+    className: $("student-class").value,
+    email: $("student-email").value.trim(),
+    phone: $("student-phone").value.trim()
+  };
+
+  if (!student.name || !student.className) return;
+
+  students.push(student);
+
+  if (saveData()) {
+    $("student-form").reset();
+    $("student-form").classList.add("hidden");
+    renderAll();
+  } else {
+    students.pop();
+  }
+});
+
+function renderStudents() {
+  const query = $("student-search").value.toLowerCase().trim();
+
+  const filtered = students.filter(student =>
+    [student.id, student.name, student.className,
+     student.email, student.phone]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  $("student-table").innerHTML = filtered.length
+    ? filtered.map(student => `
+        <tr>
+          <td>${esc(student.id)}</td>
+          <td>${esc(student.name)}</td>
+          <td>${esc(student.className)}</td>
+          <td>${esc(student.email || "—")}</td>
+          <td>${esc(student.phone || "—")}</td>
+          <td>
+            <button class="btn btn-danger"
+              data-delete-student="${esc(student.id)}">Delete</button>
+          </td>
+        </tr>
+      `).join("")
+    : emptyRow(6, "No matching students found.");
+}
+
+$("student-search").addEventListener("input", renderStudents);
+
+$("student-table").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-student]");
+  if (!button) return;
+
+  const id = button.dataset.deleteStudent;
+  const student = students.find(item => item.id === id);
+  if (!student) return;
+
+  if (!confirm(`Delete ${student.name}? Their attendance and results will also be removed.`)) {
+    return;
+  }
+
+  const oldStudents = students;
+  const oldAttendance = attendance;
+  const oldResults = results;
+
+  students = students.filter(item => item.id !== id);
+  attendance = attendance.filter(item => item.studentId !== id);
+  results = results.filter(item => item.studentId !== id);
+
+  if (saveData()) renderAll();
+  else {
+    students = oldStudents;
+    attendance = oldAttendance;
+    results = oldResults;
+  }
+});
+
+// TEACHERS
+
+$("show-teacher-form").addEventListener("click", () => {
+  $("teacher-form").classList.remove("hidden");
+  $("teacher-name").focus();
+});
+
+$("cancel-teacher").addEventListener("click", () => {
+  $("teacher-form").reset();
+  $("teacher-form").classList.add("hidden");
+});
+
+$("teacher-form").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const teacher = {
+    id: newId("TCH"),
+    name: $("teacher-name").value.trim(),
+    subject: $("teacher-subject").value.trim(),
+    email: $("teacher-email").value.trim(),
+    phone: $("teacher-phone").value.trim()
+  };
+
+  if (!teacher.name || !teacher.subject) return;
+
+  teachers.push(teacher);
+
+  if (saveData()) {
+    $("teacher-form").reset();
+    $("teacher-form").classList.add("hidden");
+    renderAll();
+  } else {
+    teachers.pop();
+  }
+});
+
+function renderTeachers() {
+  const query = $("teacher-search").value.toLowerCase().trim();
+
+  const filtered = teachers.filter(teacher =>
+    [teacher.id, teacher.name, teacher.subject,
+     teacher.email, teacher.phone]
+      .some(value => String(value || "").toLowerCase().includes(query))
+  );
+
+  $("teacher-table").innerHTML = filtered.length
+    ? filtered.map(teacher => `
+        <tr>
+          <td>${esc(teacher.id)}</td>
+          <td>${esc(teacher.name)}</td>
+          <td>${esc(teacher.subject)}</td>
+          <td>${esc(teacher.email || "—")}</td>
+          <td>${esc(teacher.phone || "—")}</td>
+          <td>
+            <button class="btn btn-danger"
+              data-delete-teacher="${esc(teacher.id)}">Delete</button>
+          </td>
+        </tr>
+      `).join("")
+    : emptyRow(6, "No teachers found.");
+}
+
+$("teacher-search").addEventListener("input", renderTeachers);
+
+$("teacher-table").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-teacher]");
+  if (!button) return;
+
+  const id = button.dataset.deleteTeacher;
+  if (!teachers.some(item => item.id === id)) return;
+  if (!confirm("Delete this teacher?")) return;
+
+  const oldTeachers = teachers;
+  teachers = teachers.filter(item => item.id !== id);
+
+  if (saveData()) renderAll();
+  else teachers = oldTeachers;
+});
+
+// ATTENDANCE
+
+function todayString() {
+  const date = new Date();
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+
+$("attendance-date").value = todayString();
+$("attendance-date").max = todayString();
+
+function renderAttendance() {
+  const date = $("attendance-date").value || todayString();
+
+  $("attendance-table").innerHTML = students.length
+    ? students.map(student => {
+        const record = attendance.find(item =>
+          item.studentId === student.id && item.date === date
+        );
+
+        const status = record ? record.status : "Present";
+
+        return `
+          <tr>
+            <td>${esc(student.id)}</td>
+            <td>${esc(student.name)}</td>
+            <td>${esc(student.className)}</td>
+            <td>
+              <select data-attendance-id="${esc(student.id)}">
+                <option ${status === "Present" ? "selected" : ""}>Present</option>
+                <option ${status === "Absent" ? "selected" : ""}>Absent</option>
+              </select>
+            </td>
+          </tr>
+        `;
+      }).join("")
+    : emptyRow(4, "Add students before marking attendance.");
+}
+
+$("attendance-date").addEventListener("change", renderAttendance);
+
+$("save-attendance").addEventListener("click", () => {
+  const date = $("attendance-date").value;
+
+  if (!date) {
+    alert("Please select a date.");
+    return;
+  }
+
+  if (date > todayString()) {
+    alert("Attendance cannot be marked for a future date.");
+    return;
+  }
+
+  const oldAttendance = attendance.filter(item => item.date !== date);
+  const records = [...document.querySelectorAll("[data-attendance-id]")]
+    .map(select => ({
+      id: newId("ATT"),
+      studentId: select.dataset.attendanceId,
+      date,
+      status: select.value
+    }));
+
+  attendance = [...oldAttendance, ...records];
+
+  if (saveData()) {
+    alert("Attendance saved successfully!");
+    renderDashboard();
+  } else {
+    attendance = [...oldAttendance, ...attendance.filter(item => item.date === date)];
+  }
+});
+
+// RESULTS
+
+function renderResultOptions() {
+  const select = $("result-student");
+  const previous = select.value;
+
+  select.innerHTML = students.length
+    ? students.map(student => `
+        <option value="${esc(student.id)}">
+          ${esc(student.name)} — Class ${esc(student.className)}
+        </option>
+      `).join("")
+    : '<option value="">Add a student first</option>';
+
+  if (students.some(student => student.id === previous)) {
+    select.value = previous;
+  }
+}
+
+function gradeFor(percentage) {
+  if (percentage >= 90) return "A+";
+  if (percentage >= 80) return "A";
+  if (percentage >= 70) return "B";
+  if (percentage >= 60) return "C";
+  if (percentage >= 35) return "D";
+  return "F";
+}
+
+$("result-form").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const studentId = $("result-student").value;
+  const student = students.find(item => item.id === studentId);
+  const marks = Number($("result-marks").value);
+  const total = Number($("result-total").value);
+
+  if (!student) {
+    alert("Please add a student first.");
+    return;
+  }
+
+  if (!Number.isFinite(marks) || !Number.isFinite(total) ||
+      total <= 0 || marks < 0 || marks > total) {
+    alert("Enter valid marks. Obtained marks cannot exceed maximum marks.");
+    return;
+  }
+
+  const result = {
+    id: newId("RES"),
+    studentId,
+    subject: $("result-subject").value.trim(),
+    exam: $("result-exam").value.trim(),
+    marks,
+    total
+  };
+
+  results.push(result);
+
+  if (saveData()) {
+    $("result-form").reset();
+    renderAll();
+  } else {
+    results.pop();
+  }
+});
+
+function renderResults() {
+  const query = $("result-search").value.toLowerCase().trim();
+
+  const filtered = results.filter(result => {
+    const student = students.find(item => item.id === result.studentId);
+    return [student?.name, result.subject, result.exam]
+      .some(value => String(value || "").toLowerCase().includes(query));
+  });
+
+  $("result-table").innerHTML = filtered.length
+    ? filtered.map(result => {
+        const student = students.find(item => item.id === result.studentId);
+        const percentage = result.total > 0
+          ? result.marks / result.total * 100
+          : 0;
+
+        return `
+          <tr>
+            <td>${esc(student ? student.name : "Unknown")}</td>
+            <td>${esc(result.exam)}</td>
+            <td>${esc(result.subject)}</td>
+            <td>${esc(result.marks)} / ${esc(result.total)}</td>
+            <td>${percentage.toFixed(1)}%</td>
+            <td><span class="badge">${gradeFor(percentage)}</span></td>
+            <td>
+              <button class="btn btn-danger"
+                data-delete-result="${esc(result.id)}">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join("")
+    : emptyRow(7, "No examination results found.");
+}
+
+$("result-search").addEventListener("input", renderResults);
+
+$("result-table").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-result]");
+  if (!button) return;
+
+  const id = button.dataset.deleteResult;
+  if (!results.some(item => item.id === id)) return;
+  if (!confirm("Delete this examination result?")) return;
+
+  const oldResults = results;
+  results = results.filter(item => item.id !== id);
+
+  if (saveData()) renderAll();
+  else results = oldResults;
+});
+
+// Refresh the interface after changes.
+
+function renderAll() {
+  renderDashboard();
+  renderStudents();
+  renderTeachers();
+  renderAttendance();
+  renderResultOptions();
+  renderResults();
+}
+
+renderAll();
+showPage("dashboard");
+</script>
+</body>
+</html>
