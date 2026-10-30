@@ -307,14 +307,14 @@ tbody tr:hover { background: #fafaff; }
   <main class="main">
     <header class="topbar">
       <div>
-        <h1 id="page-title">Dashboard</h1>
+        <h1 id="page-title">sandipani school</h1>
         <div class="subtitle">School Management System</div>
       </div>
       <div class="profile">👤 School Admin</div>
     </header>
 
-    <!-- Dashboard -->
-    <section id="page-dashboard" class="page">
+    <!-- sandipani school -->
+    <section id="page-sandipani school" class="page">
       <div class="stats">
         <div class="stat">
           <div class="stat-icon">🎓</div>
@@ -362,7 +362,7 @@ tbody tr:hover { background: #fafaff; }
         <h2>Welcome tosandipani school !</h2>
         <p class="notice">
           Manage student records, teacher details, daily attendance,
-          and examination results from one dashboard.
+          and examination results from one sandipani school.
         </p>
       </div>
     </section>
@@ -642,18 +642,18 @@ function showPage(page) {
   });
 
   const titles = {
-    dashboard: "Dashboard",
+    sandipani school: "sandipani school",
     students: "Students",
     teachers: "Teachers",
     attendance: "Attendance",
     results: "Examination Results"
   };
 
-  $("page-title").textContent = titles[page] || "Dashboard";
+  $("page-title").textContent = titles[page] || "sandipani school";
 
   if (page === "attendance") renderAttendance();
   if (page === "results") renderResultOptions();
-  renderDashboard();
+  rendersandipani school();
 }
 
 document.querySelectorAll(".nav-btn").forEach(button => {
@@ -664,7 +664,7 @@ document.querySelectorAll("[data-go]").forEach(button => {
   button.addEventListener("click", () => showPage(button.dataset.go));
 });
 
-function renderDashboard() {
+function rendersandipani school() {
   $("total-students").textContent = students.length;
   $("total-teachers").textContent = teachers.length;
   $("total-classes").textContent = new Set(
@@ -930,7 +930,7 @@ $("save-attendance").addEventListener("click", () => {
 
   if (saveData()) {
     alert("Attendance saved successfully!");
-    renderDashboard();
+    rendersandipani school();
   } else {
     attendance = [...oldAttendance, ...attendance.filter(item => item.date === date)];
   }
@@ -1056,7 +1056,7 @@ $("result-table").addEventListener("click", event => {
 // Refresh the interface after changes.
 
 function renderAll() {
-  renderDashboard();
+  rendersandipani school();
   renderStudents();
   renderTeachers();
   renderAttendance();
@@ -1065,7 +1065,7 @@ function renderAll() {
 }
 
 renderAll();
-showPage("dashboard");
+showPage("sandipani school");
 </script>
 </body>
 </html>
